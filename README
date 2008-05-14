@@ -1,5 +1,9 @@
 = Admin Tree Structure
 
+Originally created by Daniel Sheppard
+Updated and put on github by Benny Degezelle and Keith Bingman because original server seems to be down.
+Original announcement at http://lists.radiantcms.org/pipermail/radiant/2007-October/006597.html
+
 Adds a structure to the page tree.
 
 Pages can define a 'tree_children' method to return their children in
