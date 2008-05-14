@@ -21,6 +21,8 @@ If tree_children is defined and returns non-page objects, tree_child
 should also be defined, returning the specific child for an alpha-numeric
 slug.
 
+*** THIS EXTENSION REQUIRES THE 'SHARDS' EXTENSION TO BE INSTALLED ***
+
 This extension provides ArchivePage with two levels of drill-down
 (year and month) and should be referenced as an example.
 
