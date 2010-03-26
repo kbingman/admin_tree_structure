@@ -1,4 +1,4 @@
-module ArchivePageTreeStructure
+module AdminTreeStructure::ArchivePage
   def tree_children
     tree_children = []
     last = edge_date(false)
@@ -34,6 +34,10 @@ module ArchivePageTreeStructure
     last = edge_date(false)
     ArchiveYearTreePage.new(self, first, last)
   end
+  
+  def tree_child(required_role)
+    'all'
+  end
 
   class ArchiveTreePage
     def virtual?
@@ -41,6 +45,9 @@ module ArchivePageTreeStructure
     end
     def self.display_name
       'Page'
+    end
+    def required_role
+      'all'
     end
   end
   
@@ -72,6 +79,9 @@ module ArchivePageTreeStructure
     end
     def status
       Status.new(:name => '')
+    end
+    def required_role
+      'all'
     end
   end
   
@@ -108,6 +118,9 @@ module ArchivePageTreeStructure
     end
     def status
       Status.new(:name => '')
+    end
+    def required_role
+      'all'
     end
   end
 end

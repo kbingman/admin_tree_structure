@@ -1,6 +1,6 @@
-module PageControllerChildren
-  def self.included(clazz)
-    clazz.class_eval do
+module AdminTreeStructure::PagesControllerExtensions
+  def self.included(base)
+    base.class_eval do
       def children
         id, *tree_children = params[:id].split('_')
         @parent = tree_children.inject(Page.find(id)) {|current, slug| current.tree_child(slug) }

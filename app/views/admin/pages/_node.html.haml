@@ -1,0 +1,35 @@
+%tr.node.page{:class =>"level_#{level}#{children_class}#{virtual_class}", :id => "page_#{page.id}"}
+  - render_region :node, :locals => {:page => page, :level => level, :simple => simple} do |node| 
+    - node.title_column do 
+      %td.page{:style => "padding-left: #{padding_left(level)}px"}
+        %span.w1
+          - if simple 
+            = icon 
+            = node_title 
+          - elsif Page === page
+            = expander(level) + link_to("#{icon} #{node_title}", edit_admin_page_url(page), :title => page.url)
+            = page_type
+            = spinner
+          - else 
+            = expander(level) + icon + node_title 
+            = page_type 
+            = spinner 
+    - node.status_column do
+      - if !simple && Page === page
+        %td.status{:class => "#{page.status.name.downcase}_status", :title => "#{timestamp(page.published_at) if page.published_at}"}= t(page.status.name.downcase)
+      - elsif !simple
+        %td.status &nbsp;
+    - node.add_child_column do
+      - if !simple && Page === page
+        %td.add_child= link_to t('add_child'), new_admin_page_child_url(page)
+      - elsif !simple
+        %td.add_child &nbsp;
+    - node.remove_column do 
+      - if !simple && Page === page
+        %td.remove= link_to t('remove'), remove_admin_page_url(page)
+      - elsif !simple
+        %td.remove &nbsp;
+        
+-# if expanded
+- children.each do |child|
+  = render_node child, :level => level + 1, :simple => simple 

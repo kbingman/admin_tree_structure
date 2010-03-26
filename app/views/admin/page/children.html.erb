@@ -1,5 +1,0 @@
-<% level = @level + 1 -%>
-<% children = @parent.respond_to?(:tree_children) ? @parent.tree_children : @parent.children %>
-<% children.each do |child| -%>
-<%= render_node child, :expand => 1, :level => level %>
-<% end -%>
