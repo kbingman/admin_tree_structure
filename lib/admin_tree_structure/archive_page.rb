@@ -12,6 +12,7 @@ module AdminTreeStructure::ArchivePage
     end
     tree_children + children.find(:all, :conditions => ['virtual = ?', true])
   end 
+  
   def edge_date(first)
     if !first && children.find(:first, :conditions => 'updated_at is null')
       return Time.now
@@ -29,15 +30,16 @@ module AdminTreeStructure::ArchivePage
     end
     edge
   end
+  
   def tree_child(slug)
     first = [edge_date(true),Time.utc(slug.to_i)].max
     last = edge_date(false)
     ArchiveYearTreePage.new(self, first, last)
   end
   
-  def tree_child(required_role)
-    'all'
-  end
+  # def tree_child(required_role)
+  #   'all'
+  # end
 
   class ArchiveTreePage
     def virtual?
@@ -45,6 +47,9 @@ module AdminTreeStructure::ArchivePage
     end
     def self.display_name
       'Page'
+    end
+    def parent
+      @parent
     end
     def required_role
       'all'
@@ -57,12 +62,15 @@ module AdminTreeStructure::ArchivePage
       @start_time = start_time
       @end_time = end_time
     end
+    
     def id
       @start_time.strftime("#{@parent.id}_%Y")
     end
+    
     def title
       @start_time.strftime("%Y")
     end
+    
     def tree_children
       start_month = @start_time.month
       end_month = 12
@@ -71,18 +79,23 @@ module AdminTreeStructure::ArchivePage
         tree_child(m)
       end.reverse
     end
+    
     def tree_child(slug)
       ArchiveMonthTreePage.new(@parent, @start_time.beginning_of_year.months_since(slug.to_i - 1))
     end
+    
     def url
       "#{@parent.url}#{title}"
     end
+    
     def status
       Status.new(:name => '')
     end
+    
     def required_role
       'all'
     end
+  
   end
   
   class ArchiveMonthTreePage < ArchiveTreePage

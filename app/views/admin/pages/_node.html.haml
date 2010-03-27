@@ -30,6 +30,6 @@
       - elsif !simple
         %td.remove &nbsp;
         
--# if expanded
-- children.each do |child|
-  = render_node child, :level => level + 1, :simple => simple 
+- if expanded
+  - children.each do |child|
+    = render_node child, :level => level + 1, :simple => simple 
